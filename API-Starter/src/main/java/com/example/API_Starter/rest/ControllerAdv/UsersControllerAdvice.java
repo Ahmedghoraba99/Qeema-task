@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.example.API_Starter.rest.StudentResponses.ResponseError;
 import com.example.API_Starter.rest.UsersResponses.exceptions.UserNotFoundException;
 
 @ControllerAdvice

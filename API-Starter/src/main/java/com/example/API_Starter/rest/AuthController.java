@@ -19,10 +19,13 @@ class TokenResponse {
 
     private String token;
     private long userId;
+    private String name;
 
-    public TokenResponse(String token, long userId2) {
+    public TokenResponse(String token, long userId2, String name) {
         this.token = token;
         this.userId = userId2;
+        this.name = name;
+
     }
 
     public String getToken() {
@@ -39,6 +42,14 @@ class TokenResponse {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
@@ -64,13 +75,15 @@ public class AuthController {
     public TokenResponse login(@RequestBody Users user) {
         Optional<Users> tempUser = service.findByEmail(user.getUsername());
         long userId = tempUser.get().getId();
-        System.out.println("" + user.getEmail() + " " + user.getPassword());
+        String name = tempUser.get().getUsername();
+        System.out.println("***********************************************");
+        System.out.println(user.getUsername() + " " + user.getName() + name);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {
             jwtService.generateToken(user.getUsername());
             // return token as json
-            return new TokenResponse(jwtService.generateToken(user.getUsername()), userId);
+            return new TokenResponse(jwtService.generateToken(user.getUsername()), userId, name);
 
         } else {
             throw new RuntimeException("Username or Password is incorrect");
