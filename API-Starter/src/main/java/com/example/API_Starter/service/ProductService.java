@@ -1,7 +1,7 @@
 package com.example.API_Starter.service;
 
-import com.example.API_Starter.entity.Product;
+import com.example.API_Starter.repository.ProductRepository;
 
-public interface ProductService extends BasicCrudService<Product> {
+public interface ProductService extends ProductRepository {
 
 }
