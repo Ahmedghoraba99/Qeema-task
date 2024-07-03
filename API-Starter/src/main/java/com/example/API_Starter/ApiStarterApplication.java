@@ -1,7 +1,5 @@
 package com.example.API_Starter;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.example.API_Starter.entity.Product;
-import com.example.API_Starter.entity.Users;
 import com.example.API_Starter.service.ProductService;
 import com.example.API_Starter.service.UsersService;
 
@@ -41,21 +37,20 @@ public class ApiStarterApplication {
             System.out.println("Seeding data...");
 
             // Products seeds
-            System.out.println("*****Product seeding*****");
-            ArrayList<Product> products = new ArrayList<>();
-            products.add(new Product("Apple", 100, 9));
-            products.add(new Product("Banana", 200, 8));
-            products.add(new Product("Cherry", 300, 7));
-            products.forEach(product -> productService.save(product));
-
+            // System.out.println("*****Product seeding*****");
+            // ArrayList<Product> products = new ArrayList<>();
+            // products.add(new Product("Apple", 100, 9));
+            // products.add(new Product("Banana", 200, 8));
+            // products.add(new Product("Cherry", 300, 7));
+            // products.forEach(product -> productService.save(product));
             // Users seeds
-            System.out.println("*****Users seeding*****");
-            ArrayList<Users> users = new ArrayList<>();
-            String encodedPassword = passwordEncoder().encode("123456789");
-            users.add(new Users("Ahmed", "ahmed@gmail.com", encodedPassword, "ADMIN"));
-            users.add(new Users("Mohamed", "mohamed@gmail.com", encodedPassword, "USER"));
-            users.add(new Users("Ali", "ali@gmail.com", encodedPassword, "USER"));
-            users.forEach(user -> userService.save(user));
+            // System.out.println("*****Users seeding*****");
+            // ArrayList<Users> users = new ArrayList<>();
+            // String encodedPassword = passwordEncoder().encode("123456789");
+            // users.add(new Users("Ahmed", "ahmed@gmail.com", encodedPassword, "ADMIN"));
+            // users.add(new Users("Mohamed", "mohamed@gmail.com", encodedPassword, "USER"));
+            // users.add(new Users("Ali", "ali@gmail.com", encodedPassword, "USER"));
+            // users.forEach(user -> userService.save(user));
         };
     }
 }
