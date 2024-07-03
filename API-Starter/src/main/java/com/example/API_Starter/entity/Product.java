@@ -35,8 +35,6 @@ public class Product {
     @Column(name = "updated_at")
     private String updatedAt;
 
-    // @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<OrderProduct> orderProducts;
     // Getters and setters
     public int getId() {
         return id;
@@ -98,10 +96,4 @@ public class Product {
         this.updatedAt = new java.util.Date().toString();
     }
 
-    // public List<OrderProduct> getOrderProducts() {
-    //     return orderProducts;
-    // }
-    // public void setOrderProducts(List<OrderProduct> orderProducts) {
-    //     this.orderProducts = orderProducts;
-    // }
 }
