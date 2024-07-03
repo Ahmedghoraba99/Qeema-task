@@ -79,6 +79,14 @@ public class Users implements UserDetails {
         this.updatedAt = System.currentTimeMillis() + "";
     }
 
+    public Users(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.createdAt = System.currentTimeMillis() + "";
+        this.updatedAt = System.currentTimeMillis() + "";
+    }
+
     // getters and setters
     public Long getId() {
         return id;
