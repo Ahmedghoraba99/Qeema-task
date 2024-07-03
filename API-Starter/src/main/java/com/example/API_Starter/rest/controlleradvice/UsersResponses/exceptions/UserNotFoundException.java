@@ -1,4 +1,4 @@
-package com.example.API_Starter.rest.ControllerAdv.UsersResponses.exceptions;
+package com.example.API_Starter.rest.controlleradvice.UsersResponses.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
 
