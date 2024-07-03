@@ -19,11 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class AuthSecurityConf {
 
-    @Autowired
+    // @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
     private JwtFilter jwtFilter;
+
+    @Autowired
+    public AuthSecurityConf(UserDetailsService userDetailsService, JwtFilter jwtFilter) {
+        this.userDetailsService = userDetailsService;
+        this.jwtFilter = jwtFilter;
+    }
 
     @Bean
     public AuthenticationProvider authProvider() {
@@ -38,7 +43,10 @@ public class AuthSecurityConf {
 
         http.csrf(customizer -> customizer.disable()).headers().frameOptions().disable().and()
                 .authorizeHttpRequests(request -> request
-                .requestMatchers("/api/auth/login",
+                .requestMatchers(
+                        "/api/auth/login",
+                        "/api/auth/register",
+                        "/auth/register",
                         "/auth/login", "/v2/api-docs",
                         "/swagger-ui",
                         "/swagger-ui.html",
