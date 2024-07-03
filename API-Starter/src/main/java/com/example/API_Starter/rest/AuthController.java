@@ -3,6 +3,7 @@ package com.example.API_Starter.rest;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -57,18 +58,20 @@ class TokenResponse {
 @RestController
 public class AuthController {
 
-    @Autowired
     private UsersService service;
-
-    @Autowired
     private JwtService jwtService;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    AuthController(@Lazy UsersService service, JwtService jwtService, AuthenticationManager authenticationManager) {
+        this.service = service;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping("register")
     public Users register(@RequestBody Users user) {
-        return service.add(user);
+        return service.save(user);
     }
 
     @PostMapping("login")
@@ -76,8 +79,6 @@ public class AuthController {
         Optional<Users> tempUser = service.findByEmail(user.getUsername());
         long userId = tempUser.get().getId();
         String name = tempUser.get().getUsername();
-        System.out.println("***********************************************");
-        System.out.println(user.getUsername() + " " + user.getName() + name);
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         if (authentication.isAuthenticated()) {

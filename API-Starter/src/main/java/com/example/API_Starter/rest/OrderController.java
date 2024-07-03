@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.API_Starter.entity.Order;
 import com.example.API_Starter.service.OrderRequest;
-import com.example.API_Starter.service.OrderServiceImpl;
+import com.example.API_Starter.service.OrderService;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    OrderServiceImpl orderService;
+    OrderService orderService;
 
     // Constructor injection    
     @Autowired
-    public OrderController(OrderServiceImpl orderService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 

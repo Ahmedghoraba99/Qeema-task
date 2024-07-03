@@ -24,17 +24,18 @@ public class UsersController {
 
     @GetMapping("")
     public Iterable<Users> getUsers() {
-        return usersService.getAll();
+        return usersService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Users getUserById(@PathVariable int id) {
-        return usersService.getById(id);
+    public Users getUserById(@PathVariable long id) {
+        return usersService.findById(id).get();
     }
 
     @PostMapping("")
-    public String postMethodName(@RequestBody String entity) {
-        return "Success";
+    public String postMethodName(@RequestBody Users user) {
+        this.usersService.save(user);
+        return "Saved";
     }
 
 }
