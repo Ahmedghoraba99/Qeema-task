@@ -5,10 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Service;
 
 import com.example.API_Starter.entity.Users;
 import com.example.API_Starter.rest.controlleradvice.auth.requests.LoginRequest;
 import com.example.API_Starter.rest.controlleradvice.auth.response.TokenResponse;
+
+@Service
 
 public class AuthServiceImpl implements AuthService {
 
