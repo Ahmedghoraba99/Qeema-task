@@ -83,6 +83,7 @@ public class Users implements UserDetails {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = Role.USER;
         this.createdAt = System.currentTimeMillis() + "";
         this.updatedAt = System.currentTimeMillis() + "";
     }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.API_Starter.entity.UserPrincipal;
 import com.example.API_Starter.entity.Users;
 import com.example.API_Starter.repository.UserRepository;
-import com.example.API_Starter.rest.UsersResponses.exceptions.UserNotFoundException;
+import com.example.API_Starter.rest.ControllerAdv.UsersResponses.exceptions.UserNotFoundException;
 
 @Service
 public class UsersServiceImpl implements UserDetailsService {
