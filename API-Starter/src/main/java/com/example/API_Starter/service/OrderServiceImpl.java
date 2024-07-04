@@ -17,9 +17,9 @@ import jakarta.transaction.Transactional;
 @Service
 public class OrderServiceImpl {
 
-    private OrderRepository orderRepository;
-    private ProductService productService;
-    private UsersService usersService;
+    private final OrderRepository orderRepository;
+    private final ProductService productService;
+    private final UsersService usersService;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, ProductService productService, UsersService usersService) {
@@ -28,36 +28,65 @@ public class OrderServiceImpl {
         this.usersService = usersService;
     }
 
-    public OrderServiceImpl() {
-
-    }
-
     @Transactional
     public Order createOrder(long userId, List<OrderItemRequest> orderItemRequests) {
-        // Retrieve user from database
-        Users user = usersService.findById(userId).get(); // Create new Order
-        Order order = new Order();
-        order.setUser(user);
+        Users user = findUserById(userId);
+        Order order = initializeOrder(user);
 
         for (OrderItemRequest itemRequest : orderItemRequests) {
-            // Product Id validity check
-            Product product = productService.findById(itemRequest.getProductId())
-                    .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + itemRequest.getProductId()));
+            Product product = findProductById(itemRequest.getProductId());
+            validateProductQuantity(product, itemRequest.getQuantity());
 
-            OrderProduct orderItem = new OrderProduct();
-            if (product.getQuantity() < itemRequest.getQuantity()) {
-                throw new IllegalArgumentException("Product quantity is insufficient");
-            }
-            orderItem.setOrder(order);
-            orderItem.setProduct(product);
-            orderItem.setQuantity(itemRequest.getQuantity());
+            OrderProduct orderItem = createOrderProduct(order, product, itemRequest.getQuantity());
             order.getOrderProducts().add(orderItem);
-            // Decreased product quantity
-            product.setQuantity(product.getQuantity() - itemRequest.getQuantity());
-            productService.save(product);
+
+            updateProductQuantity(product, itemRequest.getQuantity());
         }
-        order.setTotalPrice(userId);
+
+        calculateTotalPrice(order);
 
         return orderRepository.save(order);
+    }
+
+    private Users findUserById(long userId) {
+        return usersService.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+    }
+
+    private Order initializeOrder(Users user) {
+        Order order = new Order();
+        order.setUser(user);
+        return order;
+    }
+
+    private Product findProductById(long productId) {
+        return productService.findById((int) productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+    }
+
+    private void validateProductQuantity(Product product, int requestedQuantity) {
+        if (product.getQuantity() < requestedQuantity) {
+            throw new IllegalArgumentException("Insufficient quantity for product id: " + product.getId());
+        }
+    }
+
+    private OrderProduct createOrderProduct(Order order, Product product, int quantity) {
+        OrderProduct orderItem = new OrderProduct();
+        orderItem.setOrder(order);
+        orderItem.setProduct(product);
+        orderItem.setQuantity(quantity);
+        return orderItem;
+    }
+
+    private void updateProductQuantity(Product product, int quantity) {
+        product.setQuantity(product.getQuantity() - quantity);
+        productService.save(product);
+    }
+
+    private void calculateTotalPrice(Order order) {
+        double totalPrice = order.getOrderProducts().stream()
+                .mapToDouble(orderItem -> orderItem.getProduct().getPrice() * orderItem.getQuantity())
+                .sum();
+        order.setTotalPrice(totalPrice);
     }
 }
