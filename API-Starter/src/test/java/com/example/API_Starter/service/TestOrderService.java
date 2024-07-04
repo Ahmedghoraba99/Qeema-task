@@ -1,4 +1,4 @@
-package com.example.API_Starter.service;
+package com.example.api.service;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -16,11 +16,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.API_Starter.entity.Order;
-import com.example.API_Starter.entity.Product;
-import com.example.API_Starter.entity.Users;
-import com.example.API_Starter.repository.OrderRepository;
-import com.example.API_Starter.repository.ProductRepository;
+import com.example.api.entity.Order;
+import com.example.api.entity.Product;
+import com.example.api.entity.Users;
+import com.example.api.repository.OrderRepository;
+import com.example.api.repository.ProductRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 

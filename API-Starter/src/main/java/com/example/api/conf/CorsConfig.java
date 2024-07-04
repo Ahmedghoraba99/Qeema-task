@@ -1,4 +1,4 @@
-package com.example.api.config;
+package com.example.api.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

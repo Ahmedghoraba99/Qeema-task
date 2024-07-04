@@ -1,4 +1,4 @@
-package com.example.API_Starter.service;
+package com.example.api.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.API_Starter.entity.Product;
-import com.example.API_Starter.repository.ProductRepository;
+import com.example.api.entity.Product;
+import com.example.api.repository.ProductRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class TestProductService {

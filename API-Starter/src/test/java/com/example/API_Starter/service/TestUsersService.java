@@ -1,4 +1,4 @@
-package com.example.API_Starter.service;
+package com.example.api.service;
 
 public class TestUsersService {
 

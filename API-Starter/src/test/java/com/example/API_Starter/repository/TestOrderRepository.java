@@ -1,4 +1,4 @@
-package com.example.API_Starter.repository;
+package com.example.api.repository;
 
 import java.util.Arrays;
 
@@ -8,10 +8,10 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.example.API_Starter.entity.Order;
-import com.example.API_Starter.entity.OrderProduct;
-import com.example.API_Starter.entity.Product;
-import com.example.API_Starter.entity.Users;
+import com.example.api.entity.Order;
+import com.example.api.entity.OrderProduct;
+import com.example.api.entity.Product;
+import com.example.api.entity.Users;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)

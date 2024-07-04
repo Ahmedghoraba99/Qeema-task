@@ -1,4 +1,4 @@
-package com.example.API_Starter;
+package com.example.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import com.example.API_Starter.rest.AuthController;
-import com.example.API_Starter.rest.OrderController;
-import com.example.API_Starter.rest.ProductController;
-import com.example.API_Starter.rest.UsersController;
+import com.example.api.rest.AuthController;
+import com.example.api.rest.OrderController;
+import com.example.api.rest.ProductController;
+import com.example.api.rest.UsersController;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ApiStarterApplicationTests {
