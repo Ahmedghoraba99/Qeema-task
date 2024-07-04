@@ -1,6 +1,7 @@
 package com.example.api.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import com.example.api.entity.OrderProduct;
 import com.example.api.entity.Product;
 import com.example.api.entity.Users;
 import com.example.api.repository.OrderRepository;
+import com.example.api.rest.controlleradvice.order.response.OrderResponse;
+import com.example.api.rest.controlleradvice.orderitem.OrderItemRequest;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -26,6 +29,14 @@ public class OrderServiceImpl {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.usersService = usersService;
+    }
+
+    public List<OrderResponse> ordersToResponses() {
+        return orderRepository.findAll()
+                .stream()
+                .map(OrderResponse::new)
+                .collect(Collectors.toList());
+
     }
 
     @Transactional

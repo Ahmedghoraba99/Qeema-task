@@ -3,6 +3,8 @@ package com.example.api.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api.entity.Order;
-import com.example.api.service.OrderRequest;
+import com.example.api.rest.controlleradvice.order.request.OrderRequest;
+import com.example.api.rest.controlleradvice.order.response.OrderResponse;
 import com.example.api.service.OrderService;
 
 @RestController
@@ -27,19 +30,28 @@ public class OrderController {
     }
 
     @GetMapping("")
-    public List<Order> getOrders() {
-        return orderService.findAll();
+    public ResponseEntity<List<OrderResponse>> getOrders() {
+        List<OrderResponse> orders = orderService.ordersToResponses();
+        return ResponseEntity.ok(orders);
+
     }
 
     @GetMapping("/{id}")
-    public String getOrderById(@PathVariable("id") int id) {
-        return "Order with id: " + id;
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable("id") int id) {
+        Order order = orderService.findById(id).get();
+        return ResponseEntity.ok(new OrderResponse(order));
     }
 
     @PostMapping("")
-    public Order creatOrder(@RequestBody OrderRequest entity) {
-        Order temp = orderService.createOrder(entity.getUserId(), entity.getOrderItems());
-        return temp;
+    public ResponseEntity<OrderResponse> creatOrder(@RequestBody OrderRequest entity) {
+        Order createdOrder = orderService.createOrder(entity.getUserId(), entity.getOrderItems());
+        return ResponseEntity.ok(new OrderResponse(createdOrder));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable("id") int id) {
+        orderService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
