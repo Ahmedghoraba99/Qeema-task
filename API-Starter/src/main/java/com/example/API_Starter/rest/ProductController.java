@@ -1,6 +1,6 @@
 package com.example.API_Starter.rest;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.API_Starter.entity.Product;
+import com.example.API_Starter.rest.controlleradvice.products.request.ProductRequest;
+import com.example.API_Starter.rest.controlleradvice.products.response.ProductResponse;
 import com.example.API_Starter.service.ProductService;
 
 @RestController
@@ -28,32 +30,36 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public Iterable<Product> getProducts() {
-        return productService.findAll();
+    public ResponseEntity<List<ProductResponse>> getProducts() {
+        List<ProductResponse> productResponses
+                = productService.productsToResponses(
+                        productService.findAll()
+                );
+        return ResponseEntity.ok(productResponses);
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProduct(@PathVariable("id") int id) {
-        return productService.findById(id);
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable("id") int id) {
+        Product product = productService.findById(id).get();
+        return ResponseEntity.ok(new ProductResponse(product));
     }
 
     @PostMapping("")
-    public Product addProduct(@RequestBody Product product) {
-        product.setId(0);
-        return productService.save(product);
+    public ResponseEntity<ProductResponse> addProduct(@RequestBody ProductRequest product) {
+        Product savedProduct = productService.save(productService.requestToProduct(product));
+        return ResponseEntity.ok(new ProductResponse(savedProduct));
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable("id") int id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") int id) {
         productService.deleteById(id);
-        return ResponseEntity
-                .status(204)
-                .build();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public Product putMethodName(@PathVariable String id, @RequestBody Product product) {
-        product.setId(Integer.parseInt(id));
-        return productService.save(product);
+    public ResponseEntity<ProductResponse> putMethodName(@PathVariable String id, @RequestBody ProductRequest product) {
+        Product updatedProduct = productService.updateProduct(product, id);
+        return ResponseEntity.ok(new ProductResponse(updatedProduct));
     }
 }
