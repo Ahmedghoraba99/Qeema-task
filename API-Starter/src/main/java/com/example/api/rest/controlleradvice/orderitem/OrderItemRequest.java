@@ -1,4 +1,4 @@
-package com.example.api.service;
+package com.example.api.rest.controlleradvice.orderitem;
 
 public class OrderItemRequest {
 

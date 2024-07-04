@@ -1,6 +1,8 @@
-package com.example.api.service;
+package com.example.api.rest.controlleradvice.order.request;
 
 import java.util.List;
+
+import com.example.api.rest.controlleradvice.orderitem.OrderItemRequest;
 
 public class OrderRequest {
 
