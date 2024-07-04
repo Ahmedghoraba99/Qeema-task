@@ -29,18 +29,6 @@ public class Order {
     @NotNull
     private double totalPrice;
 
-    // @ManyToOne
-    // @JoinColumn(name = "user_id", nullable = false)
-    // private Users user;
-    // @ManyToMany
-    // @JoinTable(
-    //         name = "product_order",
-    //         joinColumns = @JoinColumn(name = "order_id"),
-    //         inverseJoinColumns = @JoinColumn(name = "product_id")
-    // )
-    // @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<OrderProduct> orderProducts;
-    // private java.util.List<Product> products;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
