@@ -152,7 +152,7 @@ class TestOrderRepository {
 
     @Test
     void testFindAllOrders() {
-        userRepository.save(
+        Users testUser = userRepository.save(
                 new Users("John Doe", "john@gmail.com", "1234567890")
         );
 
@@ -160,7 +160,7 @@ class TestOrderRepository {
                 new Product("Product 1", 100.00, 5)
         );
         Order order = new Order();
-        order.setUser(userRepository.findById((long) 1).get());
+        order.setUser(userRepository.findById((testUser.getId())).get());
 
         // order Item 1
         OrderProduct orderItem1 = new OrderProduct();
@@ -174,10 +174,10 @@ class TestOrderRepository {
         assert !orderRepository.findAll().isEmpty();
         assert orderRepository.findAll().size() == 1;
         // clean
+        orderProductRepository.deleteAll();
         orderRepository.deleteAll();
         userRepository.deleteAll();
         productRepository.deleteAll();
-        orderProductRepository.deleteAll();
     }
 
 }
