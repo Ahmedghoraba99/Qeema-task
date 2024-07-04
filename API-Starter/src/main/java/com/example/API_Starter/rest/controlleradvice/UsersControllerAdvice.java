@@ -11,14 +11,20 @@ public class UsersControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity handleUsertNotFoundException(UserNotFoundException ex) {
-        ResponseError res = new ResponseError("User not found", 404, System.currentTimeMillis());
+        ResponseError res = new ResponseError(
+                "User not found",
+                404, System.currentTimeMillis()
+        );
         return ResponseEntity.status(404).body(res);
     }
 
     // General middleware handler
     @ExceptionHandler
-    public ResponseEntity handleGeneralException(Exception ex) {
-        ResponseError res = new ResponseError("An error occurred" + ex.getMessage(), 500, System.currentTimeMillis());
+    public ResponseEntity<Object> handleGeneralException(Exception ex) {
+        ResponseError res = new ResponseError(
+                "An error occurred" + ex.getMessage(),
+                500, System.currentTimeMillis()
+        );
         return ResponseEntity.status(500).body(res);
     }
 
