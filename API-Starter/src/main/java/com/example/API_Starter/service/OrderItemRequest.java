@@ -6,6 +6,12 @@ public class OrderItemRequest {
     private int productId;
     private int quantity;
 
+    public OrderItemRequest(int userId, int productId, int quantity) {
+        this.userId = userId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     // Getters and setters
     public int getProductId() {
         return productId;
