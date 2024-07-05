@@ -13,6 +13,8 @@ import com.example.api.entity.UserPrincipal;
 import com.example.api.entity.Users;
 import com.example.api.repository.UserRepository;
 import com.example.api.rest.controlleradvice.UsersResponses.exceptions.UserNotFoundException;
+import com.example.api.rest.controlleradvice.auth.requests.RegisterationRequest;
+import com.example.api.rest.controlleradvice.auth.response.RegisterationResponse;
 
 @Service
 public class UsersServiceImpl implements UserDetailsService {
@@ -24,6 +26,20 @@ public class UsersServiceImpl implements UserDetailsService {
     public UsersServiceImpl(@Lazy UsersService usersService, UserRepository userRepository) {
         this.usersService = usersService;
         this.userRepository = userRepository;
+    }
+
+    private Users registerationRequestToUser(RegisterationRequest registerationRequest) {
+        return new Users(
+                registerationRequest.getName(),
+                registerationRequest.getEmail(),
+                registerationRequest.getPassword()
+        );
+    }
+
+    public RegisterationResponse registerUser(RegisterationRequest registerationRequest) {
+        Users user = registerationRequestToUser(registerationRequest);
+        userRepository.save(user);
+        return new RegisterationResponse(user, "User registered successfully");
     }
 
     public Optional<Users> findByEmail(String email) {
