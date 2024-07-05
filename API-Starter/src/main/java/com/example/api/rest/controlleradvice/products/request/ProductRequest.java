@@ -6,6 +6,15 @@ public class ProductRequest {
     private String name;
     private double price;
 
+    public ProductRequest(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public ProductRequest() {
+    }
+
     public int getQuantity() {
         return quantity;
     }
