@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.api.entity.UserPrincipal;
@@ -19,17 +20,19 @@ import com.example.api.rest.controlleradvice.auth.response.RegisterationResponse
 public class UsersServiceImpl implements UserDetailsService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsersServiceImpl(UserRepository userRepository) {
+    public UsersServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private Users registerationRequestToUser(RegisterationRequest registerationRequest) {
         return new Users(
                 registerationRequest.getName(),
                 registerationRequest.getEmail(),
-                registerationRequest.getPassword()
+                encryptPassword(registerationRequest.getPassword())
         );
     }
 
@@ -37,6 +40,10 @@ public class UsersServiceImpl implements UserDetailsService {
         Users user = registerationRequestToUser(registerationRequest);
         userRepository.save(user);
         return new RegisterationResponse(user, "User registered successfully");
+    }
+
+    private String encryptPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     public Optional<Users> findByEmail(String email) {
