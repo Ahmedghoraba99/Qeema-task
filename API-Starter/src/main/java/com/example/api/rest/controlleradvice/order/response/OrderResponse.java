@@ -4,19 +4,18 @@ import java.util.List;
 
 import com.example.api.entity.Order;
 import com.example.api.entity.OrderProduct;
-import com.example.api.entity.Users;
 
 public class OrderResponse {
 
     private int id;
     private double totalPrice;
-    private Users user;
+    private Long userId;
     private List<OrderProduct> orderProducts;
 
     public OrderResponse(Order order) {
         this.id = order.getId();
         this.totalPrice = order.getTotalPrice();
-        this.user = order.getUser();
+        this.userId = order.getUser().getId();
         this.orderProducts = order.getOrderProducts();
 
     }
@@ -27,14 +26,6 @@ public class OrderResponse {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
     }
 
     public double getTotalPrice() {
@@ -51,5 +42,13 @@ public class OrderResponse {
 
     public void setOrderProducts(List<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
