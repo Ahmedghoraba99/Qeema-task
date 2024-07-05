@@ -18,6 +18,13 @@
 		<java.version>22</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>			<!-- Or the version compatible with your servlet container -->
+			<scope>provided</scope>			<!-- Servlet API is provided by the container at runtime -->
+		</dependency>
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
