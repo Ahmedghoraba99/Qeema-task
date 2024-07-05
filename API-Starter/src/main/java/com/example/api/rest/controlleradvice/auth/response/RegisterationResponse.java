@@ -13,4 +13,30 @@ public class RegisterationResponse {
         this.email = user.getEmail();
         this.message = message;
     }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    // Setters (if needed)
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

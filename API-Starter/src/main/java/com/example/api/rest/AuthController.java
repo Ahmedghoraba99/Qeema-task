@@ -2,6 +2,7 @@ package com.example.api.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<RegisterationResponse> register(@RequestBody RegisterationRequest request) {
         RegisterationResponse res = userService.registerUser(request);
-        return ResponseEntity.ok(res);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("login")
