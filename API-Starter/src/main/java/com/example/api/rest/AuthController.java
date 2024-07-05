@@ -18,6 +18,8 @@ import com.example.api.service.AuthService;
 import com.example.api.service.JwtService;
 import com.example.api.service.UsersService;
 
+import io.micrometer.core.ipc.http.HttpSender;
+
 ;
 
 @RequestMapping("/api/auth")
@@ -28,7 +30,7 @@ public class AuthController {
     private AuthService authService;
 
     @Autowired
-    AuthController(@Lazy UsersService service, AuthService authService, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthController(@Lazy UsersService service, AuthService authService, JwtService jwtService, AuthenticationManager authenticationManager) {
         this.userService = service;
         this.authService = authService;
     }
@@ -36,7 +38,7 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<RegisterationResponse> register(@RequestBody RegisterationRequest request) {
         RegisterationResponse res = userService.registerUser(request);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("login")
