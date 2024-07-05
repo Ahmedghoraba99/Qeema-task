@@ -3,7 +3,6 @@ package com.example.api.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,12 +18,10 @@ import com.example.api.rest.controlleradvice.auth.response.RegisterationResponse
 @Service
 public class UsersServiceImpl implements UserDetailsService {
 
-    private UsersService usersService;
     private UserRepository userRepository;
 
     @Autowired
-    public UsersServiceImpl(@Lazy UsersService usersService, UserRepository userRepository) {
-        this.usersService = usersService;
+    public UsersServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -43,8 +40,8 @@ public class UsersServiceImpl implements UserDetailsService {
     }
 
     public Optional<Users> findByEmail(String email) {
-        Optional<Users> temp = this.usersService.findByEmail(email);
-        if (temp == null) {
+        Optional<Users> temp = this.userRepository.findByEmail(email);
+        if (!temp.isPresent()) {
             throw new UserNotFoundException("User with email " + email + " not found");
         }
         return temp;
@@ -52,14 +49,7 @@ public class UsersServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Users user = usersService.findByEmail(username).get();
-
-        if (user == null) {
-            System.out.println("User 404");
-            throw new UsernameNotFoundException("User 404");
-        }
+        Users user = this.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User 404"));
         return new UserPrincipal(user);
     }
-
 }
