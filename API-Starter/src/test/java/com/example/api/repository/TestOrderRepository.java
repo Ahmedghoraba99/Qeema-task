@@ -86,7 +86,7 @@ class TestOrderRepository {
 
         // order Item 1
         OrderProduct orderItem1 = new OrderProduct();
-        orderItem1.setProduct(productRepository.findById(1).get());
+        orderItem1.setProduct(productRepository.findById(product1.getId()).get());
         orderItem1.setQuantity(2);
         orderItem1.setOrder(order1);
         orderRepository.save(order1);
@@ -156,7 +156,7 @@ class TestOrderRepository {
                 new Users("John Doe", "john@gmail.com", "1234567890")
         );
 
-        productRepository.save(
+        Product test = productRepository.save(
                 new Product("Product 1", 100.00, 5)
         );
         Order order = new Order();
@@ -164,7 +164,7 @@ class TestOrderRepository {
 
         // order Item 1
         OrderProduct orderItem1 = new OrderProduct();
-        orderItem1.setProduct(productRepository.findById(1).get());
+        orderItem1.setProduct(productRepository.findById(test.getId()).get());
         orderItem1.setQuantity(2);
         orderItem1.setOrder(order);
         orderProductRepository.save(orderItem1);

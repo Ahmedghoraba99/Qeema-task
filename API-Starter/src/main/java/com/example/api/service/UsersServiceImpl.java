@@ -16,6 +16,8 @@ import com.example.api.rest.controlleradvice.UsersResponses.exceptions.UserNotFo
 import com.example.api.rest.controlleradvice.auth.requests.RegisterationRequest;
 import com.example.api.rest.controlleradvice.auth.response.RegisterationResponse;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UsersServiceImpl implements UserDetailsService {
 
@@ -36,6 +38,7 @@ public class UsersServiceImpl implements UserDetailsService {
         );
     }
 
+    @Transactional
     public RegisterationResponse registerUser(RegisterationRequest registerationRequest) {
         Users user = registerationRequestToUser(registerationRequest);
         userRepository.save(user);

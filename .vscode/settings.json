@@ -1,5 +1,9 @@
 {
   "java.compile.nullAnalysis.mode": "automatic",
   "CodeGPT.apiKey": "Ollama",
-  "CodeGPT.Autocomplete.enabled": true
+  "CodeGPT.Autocomplete.enabled": true,
+  "Codegeex.Chat.LanguagePreference": "English",
+  "Codegeex.Comment.LanguagePreference": "English",
+  "Codegeex.SidebarUI.LanguagePreference": "English",
+  "Codegeex.CompletionModel": "CodeGeeX Pro[Beta]"
 }
