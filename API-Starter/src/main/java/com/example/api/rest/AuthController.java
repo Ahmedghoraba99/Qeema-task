@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.api.entity.Users;
 import com.example.api.rest.controlleradvice.auth.requests.LoginRequest;
+import com.example.api.rest.controlleradvice.auth.requests.RegisterationRequest;
+import com.example.api.rest.controlleradvice.auth.response.RegisterationResponse;
 import com.example.api.rest.controlleradvice.auth.response.TokenResponse;
 import com.example.api.service.AuthService;
 import com.example.api.service.JwtService;
@@ -22,18 +23,19 @@ import com.example.api.service.UsersService;
 @RestController
 public class AuthController {
 
-    private UsersService service;
+    private UsersService userService;
     private AuthService authService;
 
     @Autowired
     AuthController(@Lazy UsersService service, AuthService authService, JwtService jwtService, AuthenticationManager authenticationManager) {
-        this.service = service;
+        this.userService = service;
         this.authService = authService;
     }
 
     @PostMapping("register")
-    public Users register(@RequestBody Users user) {
-        return service.save(user);
+    public ResponseEntity<RegisterationResponse> register(@RequestBody RegisterationRequest request) {
+        RegisterationResponse res = userService.registerUser(request);
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("login")
