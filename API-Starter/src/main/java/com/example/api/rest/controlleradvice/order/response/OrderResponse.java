@@ -11,11 +11,13 @@ public class OrderResponse {
     private double totalPrice;
     private Long userId;
     private List<OrderProduct> orderProducts;
+    private String coustmer;
 
     public OrderResponse(Order order) {
         this.id = order.getId();
         this.totalPrice = order.getTotalPrice();
         this.userId = order.getUser().getId();
+        this.coustmer = order.getUser().getName();
         this.orderProducts = order.getOrderProducts();
 
     }
@@ -50,5 +52,13 @@ public class OrderResponse {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getCoustmer() {
+        return coustmer;
+    }
+
+    public void setCoustmer(String coustmer) {
+        this.coustmer = coustmer;
     }
 }
